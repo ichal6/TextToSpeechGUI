@@ -139,7 +139,8 @@ public class TextToSpeechGui extends Application {
         volumes.getItems().addAll(
                 TextToSpeechController.getVolumeLevels()
         );
-        volumes.setValue(volumes.getItems().get(0));
+        int mediumVolumeLevel = volumes.getItems().size()/2;
+        volumes.setValue(volumes.getItems().get(mediumVolumeLevel));
         volumes.getStyleClass().add("setting-combo-box");
 
         gridPane.add(voices, 0, 1);
