@@ -58,7 +58,7 @@ public class TextToSpeechGui extends Application {
 
         box.getChildren().add(textAreaPane);
 
-        GridPane settingsPane = createSettingComponent();
+        GridPane settingsPane = createSettingsComponent();
         box.getChildren().add(settingsPane);
 
         Button speakButton = createImageButton();
@@ -99,7 +99,7 @@ public class TextToSpeechGui extends Application {
         return button;
     }
 
-    private GridPane createSettingComponent() {
+    private GridPane createSettingsComponent() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setPadding(new Insets(10, 0, 0, 0));
