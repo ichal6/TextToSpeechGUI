@@ -6,7 +6,8 @@ import com.sun.speech.freetts.VoiceManager;
 import java.util.ArrayList;
 
 public class TextToSpeechController {
-    private static VoiceManager voiceManager = VoiceManager.getInstance();
+    private static final VoiceManager voiceManager = VoiceManager.getInstance();
+
     public static ArrayList<String> getVoices() {
         System.setProperty(
           "freetts.voices",
