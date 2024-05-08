@@ -40,27 +40,16 @@ public class TextToSpeechGui extends Application {
     private Scene createScene() {
         VBox box = new VBox();
         box.getStyleClass().add("body");
+        box.getChildren().addAll(getTextToSpeechLabel(),
+                getTextToSpeakStackPane(),
+                createSettingsComponent(),
+                getSpeakButtonStackPane()
+        );
 
-        Label textToSpeechLabel = new Label("Text-To-Speech");
-        textToSpeechLabel.getStyleClass().add("text-to-speech-label");
-        textToSpeechLabel.setMaxWidth(Double.MAX_VALUE);
-        textToSpeechLabel.setAlignment(Pos.CENTER);
+        return new Scene(box, APP_WIDTH, APP_HEIGHT);
+    }
 
-        box.getChildren().add(textToSpeechLabel);
-
-        textArea = new TextArea();
-        textArea.setWrapText(true);
-        textArea.getStyleClass().add("text-area");
-
-        StackPane textAreaPane = new StackPane();
-        textAreaPane.setPadding(new Insets(0, 15, 0, 15));
-        textAreaPane.getChildren().add(textArea);
-
-        box.getChildren().add(textAreaPane);
-
-        GridPane settingsPane = createSettingsComponent();
-        box.getChildren().add(settingsPane);
-
+    private StackPane getSpeakButtonStackPane() {
         Button speakButton = createImageButton();
         speakButton.setOnAction(actionEvent -> {
             String msg = textArea.getText();
@@ -70,14 +59,30 @@ public class TextToSpeechGui extends Application {
 
             TextToSpeechController.speak(msg, voice, rate, volume);
         });
-        
+
         StackPane speakButtonPane = new StackPane();
         speakButtonPane.setPadding(new Insets(40, 20, 0, 20));
         speakButtonPane.getChildren().add(speakButton);
+        return speakButtonPane;
+    }
 
-        box.getChildren().add(speakButtonPane);
+    private StackPane getTextToSpeakStackPane() {
+        textArea = new TextArea();
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("text-area");
 
-        return new Scene(box, APP_WIDTH, APP_HEIGHT);
+        StackPane textAreaPane = new StackPane();
+        textAreaPane.setPadding(new Insets(0, 15, 0, 15));
+        textAreaPane.getChildren().add(textArea);
+        return textAreaPane;
+    }
+
+    private static Label getTextToSpeechLabel() {
+        Label textToSpeechLabel = new Label("Text-To-Speech");
+        textToSpeechLabel.getStyleClass().add("text-to-speech-label");
+        textToSpeechLabel.setMaxWidth(Double.MAX_VALUE);
+        textToSpeechLabel.setAlignment(Pos.CENTER);
+        return textToSpeechLabel;
     }
 
     private Button createImageButton() {
