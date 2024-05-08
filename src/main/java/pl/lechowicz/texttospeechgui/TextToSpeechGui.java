@@ -18,8 +18,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class TextToSpeechGui extends Application {
     private static final int APP_WIDTH = 375;
     private static final int APP_HEIGHT = 475;
@@ -28,7 +26,7 @@ public class TextToSpeechGui extends Application {
     private ComboBox<String> voices, rates, volumes;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         Scene scene = createScene();
         scene.getStylesheets().add(getClass().getResource(
            "style.css"
