@@ -16,6 +16,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class TextToSpeechGui extends Application {
     private static final int APP_WIDTH = 375;
     private static final int APP_HEIGHT = 475;
@@ -26,9 +28,10 @@ public class TextToSpeechGui extends Application {
     @Override
     public void start(Stage stage) {
         Scene scene = createScene();
-        scene.getStylesheets().add(getClass().getResource(
-           "style.css"
-        ).toExternalForm());
+        scene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource(
+                "style.css"
+        )).toExternalForm());
         stage.setTitle("Text-To-Speech App");
         stage.setScene(scene);
         stage.show();
@@ -85,7 +88,7 @@ public class TextToSpeechGui extends Application {
 
         ImageView imageView = new ImageView(
                 new Image(
-                        getClass().getResourceAsStream("speak.png")
+                        Objects.requireNonNull(getClass().getResourceAsStream("speak.png"))
                 )
         );
 
