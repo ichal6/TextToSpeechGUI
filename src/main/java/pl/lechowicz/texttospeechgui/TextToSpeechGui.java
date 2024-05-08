@@ -16,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class TextToSpeechGui extends Application {
@@ -105,55 +106,48 @@ public class TextToSpeechGui extends Application {
     }
 
     private GridPane createSettingsComponent() {
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setPadding(new Insets(10, 0, 0, 0));
+        GridPane gridPane = getGridPaneForSettings();
 
-        Label voiceLabel = new Label("Voice");
-        voiceLabel.getStyleClass().add("setting-label");
+        createLabel("Voice", gridPane, 0);
+        createLabel("Rate", gridPane, 1);
+        createLabel("Volume", gridPane, 2);
 
-        Label rateLabel = new Label("Rate");
-        rateLabel.getStyleClass().add("setting-label");
-
-        Label volumeLabel = new Label("Volume");
-        volumeLabel.getStyleClass().add("setting-label");
-
-        gridPane.add(voiceLabel, 0, 0);
-        gridPane.add(rateLabel, 1, 0);
-        gridPane.add(volumeLabel, 2, 0);
-
-        GridPane.setHalignment(voiceLabel, HPos.CENTER);
-        GridPane.setHalignment(rateLabel, HPos.CENTER);
-        GridPane.setHalignment(volumeLabel, HPos.CENTER);
-
-        voices = new ComboBox<>();
-        voices.getItems().addAll(
-                TextToSpeechController.getVoices()
-        );
-        voices.setValue(voices.getItems().get(0));
-        voices.getStyleClass().add("setting-combo-box");
-
-        rates = new ComboBox<>();
-        rates.getItems().addAll(
-                TextToSpeechController.getSpeedRates()
-        );
-        rates.setValue(rates.getItems().get(0));
-        rates.getStyleClass().add("setting-combo-box");
-
-        volumes = new ComboBox<>();
-        volumes.getItems().addAll(
-                TextToSpeechController.getVolumeLevels()
-        );
-        int mediumVolumeLevel = volumes.getItems().size()/2;
-        volumes.setValue(volumes.getItems().get(mediumVolumeLevel));
-        volumes.getStyleClass().add("setting-combo-box");
+        voices = comboBoxInit(TextToSpeechController.getVoices(), 0);
+        rates = comboBoxInit(TextToSpeechController.getSpeedRates(), 0);
+        var volumeLevels = TextToSpeechController.getVolumeLevels();
+        int mediumVolumeLevel = volumeLevels.size()/2;
+        volumes = comboBoxInit(volumeLevels, mediumVolumeLevel);
 
         gridPane.add(voices, 0, 1);
         gridPane.add(rates, 1, 1);
         gridPane.add(volumes, 2, 1);
 
-        gridPane.setAlignment(Pos.CENTER);
+        return gridPane;
+    }
 
+    private ComboBox<String> comboBoxInit(ArrayList<String> values, int defaultSelect) {
+        var comboBox = new ComboBox<String>();
+        comboBox.getItems().addAll(
+                values
+        );
+        comboBox.setValue(comboBox.getItems().get(defaultSelect));
+        comboBox.getStyleClass().add("setting-combo-box");
+
+        return comboBox;
+    }
+
+    private void createLabel(String Voice, GridPane gridPane, int column) {
+        Label voiceLabel = new Label(Voice);
+        voiceLabel.getStyleClass().add("setting-label");
+        gridPane.add(voiceLabel, column, 0);
+        GridPane.setHalignment(voiceLabel, HPos.CENTER);
+    }
+
+    private GridPane getGridPaneForSettings() {
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setPadding(new Insets(10, 0, 0, 0));
+        gridPane.setAlignment(Pos.CENTER);
         return gridPane;
     }
 
